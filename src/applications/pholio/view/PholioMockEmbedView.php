@@ -23,10 +23,15 @@ final class PholioMockEmbedView extends AphrontView {
 
     $images_to_show = array();
     $thumbnail = null;
-    if (!empty($this->images)) {
-      $images_to_show = array_intersect_key(
-        $this->mock->getActiveImages(), array_flip($this->images));
-    }
+    
+    // HOTFIX(LK): I have no idea why the active images are intersected with the given images.
+    // If this code stays active the result is that only the first image of the first revision is ever shown
+    // because $images_to_show is empty and the cover file is used
+    //    if (!empty($this->images)) {
+    //      $images_to_show = array_intersect_key(
+    //        $this->mock->getActiveImages(), array_flip($this->images));
+    //    }
+    $images_to_show = $this->mock->getActiveImages();
 
     $xform = PhabricatorFileTransform::getTransformByKey(
       PhabricatorFileThumbnailTransform::TRANSFORM_PINBOARD);
