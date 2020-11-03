@@ -533,7 +533,9 @@ final class PhabricatorPolicyFilter extends Phobject {
     if ($viewer->isOmnipotent()) {
       return true;
     }
-
+    
+    // If the viewer is an admit short circuit all the checks.
+    // This is a modification for a school setting.
     if ($viewer->getIsAdmin()) {
       return true;
     }
