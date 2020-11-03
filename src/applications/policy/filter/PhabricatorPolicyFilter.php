@@ -170,6 +170,12 @@ final class PhabricatorPolicyFilter extends Phobject {
       return $objects;
     }
 
+    // If the viewer is an admit short circuit all the checks.
+    // This is a modification for a school setting.
+    if ($viewer->getIsAdmin()) {
+      return $objects;
+    }
+
     // Before doing any actual object checks, make sure the viewer can see
     // the applications that these objects belong to. This is normally enforced
     // in the Query layer before we reach object filtering, but execution
@@ -527,6 +533,11 @@ final class PhabricatorPolicyFilter extends Phobject {
     if ($viewer->isOmnipotent()) {
       return true;
     }
+
+    if ($viewer->getIsAdmin()) {
+      return true;
+    }
+
 
     if ($object instanceof PhabricatorSpacesInterface) {
       $space_phid = $object->getSpacePHID();
