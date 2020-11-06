@@ -131,6 +131,7 @@ final class DiffusionMercurialWireProtocol extends Phobject {
         break;
       }
     }
+    array_push($parts, 'httpheader=1024');
     return implode(' ', $parts);
   }
 
